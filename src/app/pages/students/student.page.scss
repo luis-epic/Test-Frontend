@@ -1,0 +1,49 @@
+.students-page {
+    --background: var(--ion-color-light);
+  
+    .students-banner {
+      background: linear-gradient(288deg, #6030ff, #004acd);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: 0 0 2rem 2rem;
+  
+      h1 {
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin: 0;
+      }
+  
+      p {
+        font-size: 1.2rem;
+        margin: 0.5rem 0 0;
+      }
+    }
+  
+    ion-card {
+      margin: 1rem;
+      border-radius: 1rem;
+      box-shadow:  0 4px 6px rgba(68, 5, 227, 0.55);
+  
+      ion-card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+  
+      ion-card-content {
+        font-size: 1rem;
+        color: var(--ion-color-dark);
+      }
+    }
+  
+    ion-button {
+      --background: linear-gradient(288deg, #6030ff, #004acd);
+      --border-radius: 1rem;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    ion-grid {
+      padding: 1rem;
+    }
+  }
+  

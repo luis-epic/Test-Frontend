@@ -1,13 +1,82 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>tutors</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tutors</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="tutors-page">
+  <ion-refresher slot="fixed" (ionRefresh)="loadTutors($event)">
+    <ion-refresher-content
+      pulling-icon="chevron-down-circle-outline"
+      refreshing-spinner="crescent"
+      refreshing-text="Actualizando tutores...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="tutors-banner">
+    <h1>Tutores</h1>
+    
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <ion-card color="danger">
+      <ion-card-content>{{ errorMessage }}</ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-card class="search-card">
+    <ion-card-content>
+      <form [formGroup]="filterForm">
+        <ion-searchbar 
+          formControlName="speciality" 
+          placeholder="Buscar por especialidad" 
+          show-clear-button="always">
+        </ion-searchbar>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let tutor of filteredTutors">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              {{ tutor.first_name }} {{ tutor.last_name }}
+            </ion-card-title>
+            <ion-card-subtitle>
+              {{ tutor.speciality }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Correo electronico:</strong> {{ tutor.email }}</p>
+            <p *ngIf="tutor.date_of_birth"><strong>Fecha de Nacimiento:</strong> {{ tutor.date_of_birth | date }}</p>
+            <p><strong>Ubicacion:</strong> {{ tutor.nationality }}</p>
+            <p><strong>ID:</strong> {{ tutor.id }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-title class="ion-text-center">
+      | Derechos Reservados | Luis-epic | 2025 |
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button href="https://github.com/luis-epic" target="_blank">
+        <ion-icon name="logo-github" size="medium"></ion-icon>
+      </ion-button>
+      <ion-button href="https://www.linkedin.com/in/luisepico/" target="_blank">
+        <ion-icon name="logo-linkedin" size="medium"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -1,13 +1,87 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>classes</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">classes</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="classes-page">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content
+      pulling-icon="chevron-down-circle-outline"
+      refreshing-spinner="crescent"
+      refreshing-text="Actualizando datos..."
+      >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="classes-banner">
+    <h1>Clases</h1>
+    
+  </div>
+
+  <ion-card class="filter-card">
+    <ion-card-content>
+      <form [formGroup]="filterForm" (ngSubmit)="onFilterChange()">
+        <ion-item>
+          <ion-label>Buscar </ion-label>
+          <ion-select formControlName="userId" placeholder="Estudiantes">
+            <ion-select-option *ngFor="let student of students" [value]="student.id">
+              {{ student.first_name }} {{ student.last_name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <ion-button expand="full" type="submit" [disabled]="filterForm.invalid">Filtrar</ion-button>
+        <ion-button expand="full" color="light" type="button" (click)="clearFilter()">Limpiar </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let booking of filteredBookings">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              {{ booking.student.first_name }} {{ booking.student.last_name }}
+            </ion-card-title>
+            <ion-card-subtitle>
+              <strong>Fecha:</strong> {{ booking.date | date: 'longDate' }}<br />
+              <strong>Hora de inicio:</strong> {{ booking.start_time | date: 'shortTime' }}<br />
+              <strong>Hora que termina:</strong> {{ booking.end_time | date: 'shortTime' }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Tutor:</strong> {{ booking.tutor.first_name }} {{ booking.tutor.last_name }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-title class="ion-text-center">
+      | Derechos Reservados | Luis-epic | 2025 |
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button href="https://github.com/luis-epic" target="_blank">
+        <ion-icon name="logo-github" size="medium"></ion-icon>
+      </ion-button>
+      <ion-button href="https://www.linkedin.com/in/luisepico/" target="_blank">
+        <ion-icon name="logo-linkedin" size="medium"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
